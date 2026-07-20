@@ -3,8 +3,8 @@ import Logo from '../components/Logo.jsx';
 
 export default function SignedOut({ vm }) {
   return (
-    <div style={sx('height:100%;display:grid;place-items:center;background:radial-gradient(700px 400px at 50% 30%,#162116,var(--color-bg))')}>
-      <div style={sx('width:360px;background:var(--color-surface);border:1px solid var(--color-divider);border-radius:14px;padding:28px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow-lg);animation:ewfade .4s ease both')}>
+    <div style={sx('height:100%;display:grid;place-items:center;padding:16px;background:radial-gradient(700px 400px at 50% 30%,#162116,var(--color-bg))')}>
+      <div style={sx('width:min(360px,100%);background:var(--color-surface);border:1px solid var(--color-divider);border-radius:14px;padding:28px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow-lg);animation:ewfade .4s ease both')}>
         <button onClick={vm.goHome} style={sx('display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;font:inherit;padding:0;text-align:left')} title="Back to the site">
           <Logo size={28} />
           <span style={sx('font-family:var(--font-heading);font-weight:600;font-size:19px;color:var(--color-text)')}>EquipWorth</span>

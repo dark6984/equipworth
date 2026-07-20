@@ -4,7 +4,7 @@ export default function System({ vm }) {
   return (
     <div style={sx('max-width:1080px;margin:0 auto;padding:26px 24px 46px;animation:ewfade .35s ease both')}>
       <h2 style={sx('font-size:22px;letter-spacing:-0.02em;margin:0 0 18px')}>System status</h2>
-      <div style={sx('display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;padding:18px 0;border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider);margin-bottom:22px')}>
+      <div style={sx('display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:20px;padding:18px 0;border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider);margin-bottom:22px')}>
         {vm.sysStats.map((ss, i) => (
           <div key={i} style={sx('min-width:0;padding-left:14px;border-left:2px solid var(--color-divider)')}>
             <div style={sx('font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-neutral-500);margin-bottom:5px')}>{ss.label}</div>
@@ -37,7 +37,7 @@ export default function System({ vm }) {
           ))}
         </div>
       </div>
-      <div style={sx('display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;align-items:start')}>
+      <div style={sx('display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:20px;align-items:start')}>
         <div style={sx('background:var(--color-surface);border:1px solid var(--color-divider);border-radius:10px;padding:16px')}>
           <span style={sx('font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-400);display:block;margin-bottom:10px')}>Incident log</span>
           {vm.sysLog.map((lg, i) => (

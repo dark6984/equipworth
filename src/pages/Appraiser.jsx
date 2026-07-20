@@ -7,8 +7,8 @@ export default function Appraiser({ vm }) {
       <p style={sx('font-size:13px;color:var(--color-neutral-500);margin:0 0 20px;max-width:60ch')}>
         Farmer at the counter with a trade? An auction-backed number in ten seconds. Same comp engine, live.
       </p>
-      <div style={sx('background:var(--color-surface);border:1px solid var(--color-divider);border-radius:12px;display:grid;grid-template-columns:minmax(280px,1fr) minmax(320px,1.15fr);gap:0;align-items:stretch;overflow:hidden')}>
-        <div style={sx('padding:22px;display:flex;flex-direction:column;gap:16px;border-right:1px solid var(--color-divider)')}>
+      <div className="ew-grid-2col" style={sx('background:var(--color-surface);border:1px solid var(--color-divider);border-radius:12px;display:grid;grid-template-columns:minmax(280px,1fr) minmax(320px,1.15fr);gap:0;align-items:stretch;overflow:hidden')}>
+        <div className="ew-panel-border" style={sx('padding:22px;display:flex;flex-direction:column;gap:16px;border-right:1px solid var(--color-divider)')}>
           <div className="field">
             <label>Make</label>
             <select className="input" value={vm.apprMake} onChange={vm.onApprMake}>

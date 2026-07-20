@@ -11,21 +11,21 @@ export default function Home({ vm }) {
       )}
     >
       <header style={sx('position:sticky;top:0;z-index:30;background:rgba(252,253,251,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--color-divider)')}>
-        <nav style={sx('max-width:1240px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;gap:26px')}>
+        <nav style={sx('max-width:1240px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:26px')}>
           <a href="#" onClick={vm.goHomeLink} style={sx('display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto')}>
             <Logo size={28} />
             <span style={sx('font-family:var(--font-heading);font-weight:600;font-size:18px;letter-spacing:-0.01em;color:#1A211B')}>EquipWorth</span>
           </a>
-          <a href="#product" style={sx('font-size:13px;text-decoration:none;color:#41503E')}>Product</a>
-          <a href="#pricing" style={sx('font-size:13px;text-decoration:none;color:#41503E')}>Pricing</a>
-          <a href="mailto:sales@equipworth.com" style={sx('font-size:13px;text-decoration:none;color:#41503E')}>Contact</a>
+          <a className="ew-home-navlink" href="#product" style={sx('font-size:13px;text-decoration:none;color:#41503E')}>Product</a>
+          <a className="ew-home-navlink" href="#pricing" style={sx('font-size:13px;text-decoration:none;color:#41503E')}>Pricing</a>
+          <a className="ew-home-navlink" href="mailto:sales@equipworth.com" style={sx('font-size:13px;text-decoration:none;color:#41503E')}>Contact</a>
           <button className="btn" onClick={vm.goLogin} style={sx('background:#2F6B28;border:none;color:#F3F7F0;font-weight:600;padding:9px 16px')}>
             {vm.authed ? 'Dashboard' : 'Sign in'}<i className="ph ph-arrow-right"></i>
           </button>
         </nav>
       </header>
 
-      <section style={sx('max-width:1240px;margin:0 auto;padding:clamp(48px,7vw,96px) 32px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:clamp(32px,5vw,72px);align-items:center')}>
+      <section style={sx('max-width:1240px;margin:0 auto;padding:clamp(48px,7vw,96px) 32px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:clamp(32px,5vw,72px);align-items:center')}>
         <div style={sx('animation:ewfade .5s ease both')}>
           <div style={sx('display:flex;align-items:center;gap:11px;margin-bottom:22px')}>
             <span style={sx('width:26px;height:2px;background:#C76B1F')}></span>
@@ -115,7 +115,7 @@ export default function Home({ vm }) {
           <span style={sx('font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#2F6B28')}>The product</span>
           <h2 style={sx('font-size:clamp(26px,3vw,38px);letter-spacing:-0.02em;margin:0;max-width:24ch')}>Four tools. One number you can defend.</h2>
         </div>
-        <div style={sx('display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:0 56px;margin-top:26px')}>
+        <div style={sx('display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:0 56px;margin-top:26px')}>
           {[
             ['1.', 'Comp engine', 'Every sold lot from five marketplaces, matched to your units overnight and normalized for hours, condition and option package. New comps land before you pour coffee.'],
             ['2.', 'Two-price strategy', 'Not one number: a band. The max-profit price, the quick-move price, and a days-to-sell model for everything in between. You pick the tradeoff, per unit.'],
@@ -150,7 +150,7 @@ export default function Home({ vm }) {
 
       <section style={sx('max-width:1240px;margin:0 auto;padding:88px 32px 30px')}>
         <h2 style={sx('font-size:clamp(26px,3vw,38px);letter-spacing:-0.02em;margin:0 0 34px')}>Overnight, every night.</h2>
-        <div style={sx('display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:40px')}>
+        <div style={sx('display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:40px')}>
           {vm.steps.map((st, i) => (
             <div key={i} style={sx(st.style)}>
               <div style={sx('display:flex;align-items:center;gap:12px;margin-bottom:12px')}>
@@ -169,7 +169,7 @@ export default function Home({ vm }) {
           <span style={sx('font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#2F6B28')}>Pricing</span>
           <h2 style={sx('font-size:clamp(26px,3vw,38px);letter-spacing:-0.02em;margin:0')}>Scoped to your dealership. Contact for price.</h2>
         </div>
-        <div style={sx('background:var(--color-surface);border:1px solid var(--color-divider);border-radius:14px;padding:clamp(28px,4vw,44px);display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:36px;align-items:center')}>
+        <div style={sx('background:var(--color-surface);border:1px solid var(--color-divider);border-radius:14px;padding:clamp(28px,4vw,44px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:36px;align-items:center')}>
           <div>
             <h3 style={sx('font-size:clamp(20px,2.2vw,26px);letter-spacing:-0.02em;margin:0 0 10px;max-width:24ch')}>One flat number per rooftop. No per-lookup fees, no seat counting.</h3>
             <p style={sx('font-size:14px;line-height:1.65;color:var(--color-neutral-400);margin:0 0 18px;max-width:52ch')}>Every dealership runs different iron, stores and data feeds, so we scope the price to yours. Tell us your rooftop count and DMS; you get a number the same business day.</p>
@@ -211,7 +211,7 @@ export default function Home({ vm }) {
       </section>
 
       <footer style={sx('border-top:1px solid var(--color-divider);background:#F4F8F0')}>
-        <div style={sx('max-width:1240px;margin:0 auto;padding:44px 32px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:28px')}>
+        <div style={sx('max-width:1240px;margin:0 auto;padding:44px 32px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:28px')}>
           <div>
             <div style={sx('display:flex;align-items:center;gap:9px;margin-bottom:10px')}>
               <Logo size={24} />

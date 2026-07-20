@@ -6,13 +6,13 @@ export default function Settings({ vm }) {
       <h2 style={sx('font-size:22px;letter-spacing:-0.02em;margin:0 0 2px')}>Settings</h2>
       <div style={sx('background:var(--color-surface);border:1px solid var(--color-divider);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:14px')}>
         <span style={sx('font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-400)')}>Account</span>
-        <div style={sx('display:grid;grid-template-columns:1fr 1fr;gap:12px')}>
+        <div className="ew-grid-2col-sm" style={sx('display:grid;grid-template-columns:1fr 1fr;gap:12px')}>
           <div className="field"><label>Name</label><input className="input" value="Drew Barnett" readOnly /></div>
           <div className="field"><label>Email</label><input className="input" value="drew.barnett@legacyequip.com" readOnly /></div>
         </div>
         <div className="hr" style={{ margin: '4px 0' }}></div>
         <span style={sx('font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-400)')}>Change password</span>
-        <div style={sx('display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px')}>
+        <div className="ew-grid-3col-sm" style={sx('display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px')}>
           <div className="field"><label>Current</label><input className="input" type="password" value={vm.cpw} onChange={vm.onCpw} /></div>
           <div className="field"><label>New (8+ chars)</label><input className="input" type="password" value={vm.npw} onChange={vm.onNpw} /></div>
           <div className="field"><label>Confirm new</label><input className="input" type="password" value={vm.npw2} onChange={vm.onNpw2} /></div>

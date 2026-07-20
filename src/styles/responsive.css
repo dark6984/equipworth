@@ -1,0 +1,81 @@
+/* Responsive layout overrides for tablet/phone. Desktop layout (the inline
+   styles authored elsewhere) is untouched above these breakpoints; below
+   them these rules take over via !important, which is the one safe way to
+   beat inline styles without rewriting every component. */
+
+/* ---------- ~tablet and down (iPad portrait, large phones) ---------- */
+@media (max-width: 860px) {
+  /* True two-column panels (dashboard, unit detail, appraiser) stack. */
+  .ew-grid-2col {
+    grid-template-columns: 1fr !important;
+  }
+  .ew-panel-border {
+    border-right: none !important;
+    border-bottom: 1px solid var(--color-divider);
+  }
+
+  /* Chat: thread list moves above the conversation instead of beside it. */
+  .ew-chat-shell {
+    flex-direction: column !important;
+  }
+  .ew-chat-threads {
+    width: 100% !important;
+    max-height: 180px !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--color-divider);
+  }
+
+  /* App sidebar collapses to an icon-only rail so the page content gets
+     the room back. */
+  .ew-sidebar {
+    width: 64px !important;
+    padding: 14px 8px !important;
+  }
+  .ew-sidebar-brand {
+    justify-content: center !important;
+    padding: 0 0 14px !important;
+  }
+  .ew-sidebar-nav button {
+    justify-content: center !important;
+    padding: 10px 0 !important;
+  }
+  .ew-admin-divider {
+    justify-content: center !important;
+    padding: 12px 0 4px !important;
+  }
+  .ew-sync-indicator {
+    justify-content: center !important;
+    padding: 0 !important;
+  }
+  .ew-user-btn {
+    justify-content: center !important;
+    padding: 7px 0 !important;
+  }
+  .ew-navlabel {
+    display: none !important;
+  }
+  .ew-usermenu {
+    left: 8px !important;
+    right: auto !important;
+    width: 240px !important;
+  }
+
+  /* Topbar: drop the secondary meta text, keep the page title + status dot. */
+  .ew-topbar-meta {
+    display: none !important;
+  }
+}
+
+/* ---------- phones ---------- */
+@media (max-width: 680px) {
+  .ew-home-navlink {
+    display: none !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .ew-grid-2col-sm,
+  .ew-grid-3col-sm {
+    grid-template-columns: 1fr !important;
+  }
+}

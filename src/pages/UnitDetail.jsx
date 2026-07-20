@@ -13,7 +13,7 @@ export default function UnitDetail({ vm }) {
         <span className={'tag ' + u.tagClass}>{u.signal}</span>
         <span style={sx('font-size:12px;color:var(--color-neutral-500)')}>{u.stock} · {u.hours} hrs · {u.days} days on lot · acquired {u.acq}</span>
       </div>
-      <div style={sx('background:var(--color-surface);border:1px solid var(--color-divider);border-radius:12px;padding:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:26px;align-items:center')}>
+      <div style={sx('background:var(--color-surface);border:1px solid var(--color-divider);border-radius:12px;padding:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:26px;align-items:center')}>
         <div style={sx('min-width:0')}>
           <div style={sx('height:212px;border-radius:10px;overflow:hidden;border:1px solid var(--color-divider)')}>
             <ImageSlot placeholder="Drop photos of this unit" />
@@ -63,7 +63,7 @@ export default function UnitDetail({ vm }) {
           </div>
         </div>
       </div>
-      <div style={sx('display:grid;grid-template-columns:minmax(0,1.5fr) minmax(320px,1fr);gap:20px;align-items:start;margin-top:20px')}>
+      <div className="ew-grid-2col" style={sx('display:grid;grid-template-columns:minmax(0,1.5fr) minmax(320px,1fr);gap:20px;align-items:start;margin-top:20px')}>
         <div style={sx('display:flex;flex-direction:column;gap:20px;min-width:0')}>
           <div style={sx('background:var(--color-surface);border:1px solid var(--color-divider);border-radius:10px')}>
             <div style={sx('display:flex;align-items:baseline;gap:10px;padding:12px 16px;border-bottom:1px solid var(--color-divider)')}>

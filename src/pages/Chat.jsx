@@ -3,8 +3,8 @@ import { sx } from '../lib/sx.js';
 
 export default function Chat({ vm }) {
   return (
-    <div style={sx('height:100%;display:flex;animation:ewfade .35s ease both')}>
-      <div style={sx('width:240px;flex:none;border-right:1px solid var(--color-divider);padding:16px 10px;display:flex;flex-direction:column;gap:6px;overflow-y:auto')}>
+    <div className="ew-chat-shell" style={sx('height:100%;display:flex;animation:ewfade .35s ease both')}>
+      <div className="ew-chat-threads" style={sx('width:240px;flex:none;border-right:1px solid var(--color-divider);padding:16px 10px;display:flex;flex-direction:column;gap:6px;overflow-y:auto')}>
         <button className="btn btn-primary btn-block" style={sx('margin-top:0;margin-bottom:6px')} onClick={vm.newChat}>
           <i className="ph ph-plus"></i>New chat
         </button>
