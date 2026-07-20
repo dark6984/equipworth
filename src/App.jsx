@@ -96,7 +96,7 @@ export default class App extends React.Component {
       teamFilter: 'All', addOpen: false, nName: '', nRole: 'Sales', nStore: 'Kirksville',
       watch: { 'EW-2398': true, 'EW-2405': true }, deal: {},
       legal: null,
-      userMenu: false, theme: ({ dark: 'terminal', light: 'bone' })[(typeof localStorage !== 'undefined' && localStorage.getItem('ewTheme3')) || 'terminal'] || (typeof localStorage !== 'undefined' && localStorage.getItem('ewTheme3')) || 'terminal',
+      userMenu: false, theme: (typeof localStorage !== 'undefined' && localStorage.getItem('ewTheme3')) || 'field',
       cpw: '', npw: '', npw2: '', lookback: 90, strategy: 'Balanced',
       notifs: { digest: true, drops: true, bulletins: false },
       chatMenu: null, renameId: null, renameVal: '', delId: null, schedOpen: false, schedId: null, schedFreq: 'Daily', schedTime: '7:00 AM',
