@@ -86,8 +86,9 @@ export default class App extends React.Component {
       'New Holland': { 'T8.410': 139000, 'T8.380': 128500 },
       'Fendt': { '936 Vario': 158000, '724 Vario': 172000 }
     };
+    const authed = typeof localStorage !== 'undefined' && localStorage.getItem('ewAuthed') === '1';
     this.state = {
-      view: this.props.startOn ?? 'home', unitId: null, slider: {}, query: '', cat: 'All',
+      view: authed ? 'dashboard' : (this.props.startOn ?? 'home'), unitId: null, slider: {}, query: '', cat: 'All',
       apprMake: 'John Deere', apprModel: '8R 340', apprHours: 1500, apprCond: 'Good',
       teamFilter: 'All', addOpen: false, nName: '', nRole: 'Sales', nStore: 'Kirksville',
       watch: { 'EW-2398': true, 'EW-2405': true }, deal: {},
@@ -195,6 +196,17 @@ export default class App extends React.Component {
 
   nav(view) { this.setState({ view, userMenu: false }); if (view === 'dashboard') this.startCount(); }
   openUnit(stock) { this.setState({ view: 'unit', unitId: stock }); }
+
+  signIn() {
+    try { localStorage.setItem('ewAuthed', '1'); } catch (e) {}
+    this.nav('dashboard');
+  }
+
+  signOut() {
+    try { localStorage.removeItem('ewAuthed'); } catch (e) {}
+    this.setState({ view: 'signedout', userMenu: false });
+    this.toast('Signed out');
+  }
 
   themeTokens(m) {
     const o = {};
@@ -688,9 +700,9 @@ export default class App extends React.Component {
       userMenu: s.userMenu,
       toggleUserMenu: () => this.setState(st => ({ userMenu: !st.userMenu })),
       goSettings: () => this.nav('settings'),
-      signOut: () => { this.setState({ view: 'signedout', userMenu: false }); this.toast('Signed out'); },
-      signIn: () => this.nav('dashboard'),
-      onLoginKey: ev => { if (ev.key === 'Enter') this.nav('dashboard'); },
+      signOut: () => this.signOut(),
+      signIn: () => this.signIn(),
+      onLoginKey: ev => { if (ev.key === 'Enter') this.signIn(); },
       advTag, advTagClass, advHeadline, advBody, advTop,
       cpw: s.cpw, npw: s.npw, npw2: s.npw2,
       onCpw: ev => this.setState({ cpw: ev.target.value }),
