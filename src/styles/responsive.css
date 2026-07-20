@@ -62,8 +62,12 @@
     padding: 0 !important;
   }
   .ew-user-btn {
+    width: auto !important;
+    align-self: center !important;
     justify-content: center !important;
-    padding: 7px 0 !important;
+    padding: 8px !important;
+    background: transparent !important;
+    border: none !important;
   }
   .ew-navlabel {
     display: none !important;
@@ -101,5 +105,21 @@
      instead so cards actually match their content. */
   .ew-stat-grid {
     grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* .seg (theme picker, condition, strategy, schedule frequency) clips
+     overflowing options via overflow:hidden instead of wrapping - options
+     that don't fit were just invisible. Let it wrap instead. */
+  .seg {
+    flex-wrap: wrap !important;
+    overflow: visible !important;
+  }
+
+  /* Settings rows pairing a label with a .seg control: stack instead of
+     squeezing the label into a narrow column beside a multi-row control. */
+  .ew-label-seg-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
   }
 }

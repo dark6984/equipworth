@@ -59,7 +59,7 @@ export default function AppShell({ vm }) {
               <span style={sx('display:block;font-size:12px;line-height:1.2;color:#EDEBE2')}>Drew Barnett</span>
               <span style={sx('display:block;font-size:10px;color:rgba(237,235,226,.55)')}>Used Eq. Manager</span>
             </span>
-            <i className="ph ph-caret-up-down" style={sx('font-size:13px;color:rgba(237,235,226,.5)')}></i>
+            <i className="ph ph-caret-up-down ew-navlabel" style={sx('font-size:13px;color:rgba(237,235,226,.5)')}></i>
           </button>
         </div>
       </aside>

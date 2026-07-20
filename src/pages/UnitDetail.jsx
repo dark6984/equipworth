@@ -70,7 +70,7 @@ export default function UnitDetail({ vm }) {
               <span style={sx('font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-400)')}>Auction comps</span>
               <span style={sx('font-size:11px;color:var(--color-neutral-600)')}>{u.compNote}</span>
             </div>
-            <div style={sx('overflow-x:auto')}>
+            <div className="ew-desktop-table" style={sx('overflow-x:auto')}>
               <table className="table" style={sx('font-size:13px')}>
                 <thead>
                   <tr>
@@ -92,6 +92,22 @@ export default function UnitDetail({ vm }) {
                   ))}
                 </tbody>
               </table>
+            </div>
+            <div className="ew-mobile-cards" style={sx('flex-direction:column;gap:0')}>
+              {u.comps.map((c, i) => (
+                <div key={i} style={sx('padding:12px 16px;border-top:1px solid var(--color-divider)')}>
+                  <div style={sx('display:flex;align-items:baseline;justify-content:space-between;gap:10px')}>
+                    <span style={sx('font-size:13px')}>{c.src}</span>
+                    <span style={sx('font-size:11px;color:var(--color-neutral-500)')}>{c.date}</span>
+                  </div>
+                  <div style={sx('font-size:11px;color:var(--color-neutral-500);margin-top:2px')}>{c.spec} · {c.hrs} hrs</div>
+                  <div style={sx('display:flex;align-items:baseline;gap:10px;margin-top:6px;font-size:13px;font-variant-numeric:tabular-nums')}>
+                    <span>{c.price}</span>
+                    <span style={sx('color:var(--color-neutral-600)')}>→</span>
+                    <span style={sx('color:var(--color-accent-300)')}>{c.adj} adj.</span>
+                  </div>
+                </div>
+              ))}
             </div>
             <div style={sx('font-size:11px;color:var(--color-neutral-600);padding:10px 16px;border-top:1px solid var(--color-divider)')}>
               Adj. = hammer price normalized to this unit's hours, condition and option package.

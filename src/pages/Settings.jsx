@@ -21,7 +21,7 @@ export default function Settings({ vm }) {
       </div>
       <div style={sx('background:var(--color-surface);border:1px solid var(--color-divider);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:12px')}>
         <span style={sx('font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-400)')}>Appearance</span>
-        <div style={sx('display:flex;align-items:center;gap:12px')}>
+        <div className="ew-label-seg-row" style={sx('display:flex;align-items:center;gap:12px')}>
           <span style={sx('font-size:13px;flex:1')}>Site theme</span>
           <div className="seg">
             {vm.themeOpts.map((th, i) => (
@@ -39,7 +39,7 @@ export default function Settings({ vm }) {
           <label>Comp lookback window: {vm.lookbackLabel}</label>
           <input type="range" className="ew-range" min="30" max="180" step="15" value={vm.lookback} onChange={vm.onLookback} />
         </div>
-        <div style={sx('display:flex;align-items:center;gap:12px')}>
+        <div className="ew-label-seg-row" style={sx('display:flex;align-items:center;gap:12px')}>
           <span style={sx('font-size:13px;flex:1')}>Default strategy on new units</span>
           <div className="seg">
             {vm.stratOpts.map((sp2, i) => (
