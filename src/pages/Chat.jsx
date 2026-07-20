@@ -1,11 +1,18 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { sx } from '../lib/sx.js';
 
 export default function Chat({ vm }) {
+  const [showHistory, setShowHistory] = useState(false);
+  const pickThread = (ch) => { ch.pick(); setShowHistory(false); };
+  const startNew = () => { vm.newChat(); setShowHistory(false); };
+
   return (
     <div className="ew-chat-shell" style={sx('height:100%;display:flex;animation:ewfade .35s ease both')}>
-      <div className="ew-chat-threads" style={sx('width:240px;flex:none;border-right:1px solid var(--color-divider);padding:16px 10px;display:flex;flex-direction:column;gap:6px;overflow-y:auto')}>
-        <button className="btn btn-primary btn-block" style={sx('margin-top:0;margin-bottom:6px')} onClick={vm.newChat}>
+      <div className={'ew-chat-threads' + (showHistory ? ' ew-chat-threads-open' : '')} style={sx('width:240px;flex:none;border-right:1px solid var(--color-divider);padding:16px 10px;display:flex;flex-direction:column;gap:6px;overflow-y:auto')}>
+        <button className="ew-chat-back" onClick={() => setShowHistory(false)} style={sx('display:none;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:var(--color-text);font:inherit;font-size:13px;padding:2px 6px 12px;text-align:left')}>
+          <i className="ph ph-arrow-left"></i>Back to chat
+        </button>
+        <button className="btn btn-primary btn-block" style={sx('margin-top:0;margin-bottom:6px')} onClick={startNew}>
           <i className="ph ph-plus"></i>New chat
         </button>
         {vm.chatGroups.map((g, gi) => (
@@ -26,7 +33,7 @@ export default function Chat({ vm }) {
                 )}
                 {ch.notRenaming && (
                   <>
-                    <button onClick={ch.pick} style={sx(ch.style)}>
+                    <button onClick={() => pickThread(ch)} style={sx(ch.style)}>
                       <span style={sx('font-size:12px;line-height:1.3;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:18px')}>{ch.title}</span>
                       <span style={sx('font-size:10px;color:var(--color-neutral-600);display:flex;align-items:center;gap:5px')}>
                         {ch.when}
@@ -68,7 +75,10 @@ export default function Chat({ vm }) {
           </Fragment>
         ))}
       </div>
-      <div style={sx('flex:1;min-width:0;display:flex;flex-direction:column;max-width:780px;margin:0 auto;padding:0 26px')}>
+      <div className={'ew-chat-main' + (showHistory ? ' ew-chat-main-hidden' : '')} style={sx('flex:1;min-width:0;display:flex;flex-direction:column;max-width:780px;margin:0 auto;padding:0 26px')}>
+        <button className="ew-chat-history-btn" onClick={() => setShowHistory(true)} style={sx('display:none;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:var(--color-neutral-400);font:inherit;font-size:13px;padding:14px 0 0;text-align:left;align-self:flex-start')}>
+          <i className="ph ph-arrow-left"></i>Chats
+        </button>
         {vm.chatActive && (
           <div style={sx('flex:none;padding:20px 0 12px;display:flex;align-items:center;gap:12px')}>
             <div style={sx('width:36px;height:36px;border-radius:10px;background:var(--color-accent-900);border:1px solid var(--color-divider);display:grid;place-items:center')}>

@@ -28,15 +28,35 @@
     border-bottom: 1px solid var(--color-divider);
   }
 
-  /* Chat: thread list moves above the conversation instead of beside it. */
+  /* Chat, Claude-mobile style: only one of (thread list, conversation)
+     shows at a time. Conversation is the default view; "Chats" opens the
+     full-screen history list, "Back to chat" returns without necessarily
+     picking a thread. Both panels stay in the DOM - CSS just toggles which
+     one is visible, driven by Chat.jsx's local showHistory state. */
   .ew-chat-shell {
-    flex-direction: column !important;
+    position: relative;
   }
   .ew-chat-threads {
+    display: none !important;
+  }
+  .ew-chat-threads.ew-chat-threads-open {
+    display: flex !important;
+    position: absolute;
+    inset: 0;
+    z-index: 20;
     width: 100% !important;
-    max-height: 180px !important;
+    max-height: none !important;
     border-right: none !important;
-    border-bottom: 1px solid var(--color-divider);
+    background: var(--color-bg);
+  }
+  .ew-chat-back {
+    display: flex !important;
+  }
+  .ew-chat-main.ew-chat-main-hidden {
+    display: none !important;
+  }
+  .ew-chat-history-btn {
+    display: flex !important;
   }
 
   /* App sidebar collapses to an icon-only rail so the page content gets
