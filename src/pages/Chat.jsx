@@ -81,12 +81,12 @@ export default function Chat({ vm }) {
         </button>
         {vm.chatActive && (
           <div style={sx('flex:none;padding:20px 0 12px;display:flex;align-items:center;gap:12px')}>
-            <div style={sx('width:36px;height:36px;border-radius:10px;background:var(--color-accent-900);border:1px solid var(--color-divider);display:grid;place-items:center')}>
+            <div className="ew-chat-avatar" style={sx('width:36px;height:36px;flex:none;border-radius:10px;background:var(--color-accent-900);border:1px solid var(--color-divider);display:grid;place-items:center')}>
               <i className="ph ph-sparkle" style={sx('font-size:18px;color:var(--color-accent-300)')}></i>
             </div>
             <div>
               <div style={sx('font-size:14px')}>
-                Worth AI <span style={sx('font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600);margin-left:4px')}>EquipWorth copilot</span>
+                Worth AI <span style={sx('font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-400);margin-left:4px')}>EquipWorth copilot</span>
               </div>
               <div style={sx('font-size:11px;color:var(--color-neutral-500)')}>Reads every Deere bulletin so you don't have to · current as of this morning</div>
             </div>
@@ -95,7 +95,7 @@ export default function Chat({ vm }) {
         <div ref={vm.chatRef} style={sx('flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding:8px 0 16px')}>
           {vm.chatFresh && (
             <div style={sx('margin:auto;display:flex;flex-direction:column;align-items:center;gap:18px;width:100%;max-width:640px;padding-bottom:36px;animation:ewfade .4s ease both')}>
-              <div style={sx('width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,var(--color-accent-900),var(--color-surface));border:1px solid var(--color-divider);display:grid;place-items:center')}>
+              <div className="ew-chat-avatar-lg" style={sx('width:56px;height:56px;flex:none;border-radius:16px;background:linear-gradient(135deg,var(--color-accent-900),var(--color-surface));border:1px solid var(--color-divider);display:grid;place-items:center')}>
                 <i className="ph ph-sparkle" style={sx('font-size:27px;color:var(--color-accent-300)')}></i>
               </div>
               <div style={sx('text-align:center')}>

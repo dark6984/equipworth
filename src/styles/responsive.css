@@ -110,6 +110,20 @@
     display: none !important;
   }
 
+  /* Chat sparkle avatars: force an exact square (with !important, belt
+     and suspenders against any flex sizing weirdness) and size them down
+     a notch for the tighter mobile header. */
+  .ew-chat-avatar {
+    width: 32px !important;
+    height: 32px !important;
+    flex: none !important;
+  }
+  .ew-chat-avatar-lg {
+    width: 48px !important;
+    height: 48px !important;
+    flex: none !important;
+  }
+
   /* Inventory search box: margin-left:auto pins it to one side on its own
      wrapped line, reading as off-center/chopped. Full-width and centered
      by the row's own padding instead. */
