@@ -1,0 +1,63 @@
+/* EquipWorth page-level tokens — overrides nocturne.css's default palette
+   with the green "used iron" brand palette, plus the page's base rules,
+   animations and a few control tweaks. Ported from the design file's
+   <helmet><style> block. */
+:root {
+  --font-heading: 'Schibsted Grotesk', system-ui, sans-serif;
+  --font-body: 'Instrument Sans', system-ui, sans-serif;
+  --color-bg: #0F1411; --color-surface: #161C18; --color-text: #EDEBE2;
+  --color-accent: #55A945; --color-accent-2: #E0A458;
+  --color-divider: rgba(237,235,226,.12);
+
+  --color-neutral-100: #F2F1EA; --color-neutral-200: #DFDED4; --color-neutral-300: #C4C4B8;
+  --color-neutral-400: #A3A499; --color-neutral-500: #83857B; --color-neutral-600: #666B61;
+  --color-neutral-700: #4C5249; --color-neutral-800: #333B34; --color-neutral-900: #1D2420;
+
+  --color-accent-100: #EAF6E4; --color-accent-200: #D2ECC6; --color-accent-300: #A9DB94;
+  --color-accent-400: #7BC96A; --color-accent-500: #55A945; --color-accent-600: #3F8A34;
+  --color-accent-700: #2F6B28; --color-accent-800: #224D1E; --color-accent-900: #163315;
+
+  --color-accent-2-100: #FAF0DF; --color-accent-2-200: #F3DDB9; --color-accent-2-300: #E8C28A;
+  --color-accent-2-400: #E0A458; --color-accent-2-500: #C9822E; --color-accent-2-600: #A66722;
+  --color-accent-2-700: #7F4E1B; --color-accent-2-800: #573514; --color-accent-2-900: #33200C;
+
+  --color-section: #163315; --color-section-glow: #1D4019; --color-section-ghost: #2F6B28;
+  --color-harvest: #D96C47; --color-harvest-bg: #3B1F14; --color-harvest-ink: #F0B79F;
+  --color-sky: #6FA7C7; --color-sky-bg: #16303F; --color-sky-ink: #A9CCE2;
+
+  --shadow-sm: 0 0 0 1px #2A322B;
+  --shadow-md: 0 0 0 1px #333B34, 0 8px 24px rgba(0,0,0,.5);
+  --shadow-lg: 0 0 0 1px #4C5249, 0 18px 48px rgba(0,0,0,.6);
+}
+
+html, body, #root { height: 100%; margin: 0; overflow-x: hidden; }
+body { font-family: var(--font-body); background: var(--color-bg); color: var(--color-text); }
+
+.tag { white-space: nowrap; }
+.table th, .table td { white-space: nowrap; }
+.seg-opt:has(input:checked) { box-shadow: none; background: color-mix(in srgb, var(--color-accent) 14%, transparent); }
+
+input[type=range].ew-range {
+  -webkit-appearance: none; appearance: none; width: 100%; height: 3px; border-radius: 2px;
+  background: linear-gradient(to right, var(--color-accent-2-600), var(--color-accent-500));
+  outline: none;
+}
+input[type=range].ew-range::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--color-text); border: none; cursor: grab;
+  box-shadow: 0 0 0 3px rgba(237,235,226,.15);
+}
+input[type=range].ew-range::-moz-range-thumb {
+  width: 15px; height: 15px; border-radius: 50%; background: var(--color-text); border: none; cursor: grab;
+}
+
+@keyframes ewblink { 0%, 80%, 100% { opacity: .25; } 40% { opacity: 1; } }
+@keyframes ewcursor { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+@keyframes ewfade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes ewfadeB { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes ewticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes ewdraw { from { stroke-dashoffset: 600; } to { stroke-dashoffset: 0; } }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--color-neutral-800); border-radius: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
