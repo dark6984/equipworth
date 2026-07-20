@@ -3,8 +3,22 @@
    them these rules take over via !important, which is the one safe way to
    beat inline styles without rewriting every component. */
 
+/* Data tables (inventory, team) render as cards below the tablet
+   breakpoint instead of a wide table clipped at the viewport edge with
+   no scroll affordance. Both markups exist in the DOM; only one shows. */
+.ew-mobile-cards {
+  display: none;
+}
+
 /* ---------- ~tablet and down (iPad portrait, large phones) ---------- */
 @media (max-width: 860px) {
+  .ew-desktop-table {
+    display: none !important;
+  }
+  .ew-mobile-cards {
+    display: flex !important;
+  }
+
   /* True two-column panels (dashboard, unit detail, appraiser) stack. */
   .ew-grid-2col {
     grid-template-columns: 1fr !important;

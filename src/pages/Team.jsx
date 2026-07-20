@@ -7,7 +7,7 @@ export default function Team({ vm }) {
         <div style={sx('display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-bottom:16px')}>
           <h2 style={sx('font-size:22px;letter-spacing:-0.02em;margin:0')}>Team &amp; stores</h2>
           <span style={sx('font-size:12px;color:var(--color-neutral-500);font-variant-numeric:tabular-nums')}>{vm.teamCount} people</span>
-          <div style={sx('display:flex;gap:2px')}>
+          <div style={sx('display:flex;gap:2px;flex-wrap:wrap')}>
             {vm.storeOpts.map((so, i) => (
               <label key={i} className="seg-opt" style={sx('border:none;border-radius:999px;padding:6px 13px;font-size:12.5px')}>
                 <input type="radio" name="store" checked={so.on} onChange={so.pick} readOnly />{so.label}
@@ -16,7 +16,8 @@ export default function Team({ vm }) {
           </div>
           <button className="btn btn-primary" style={sx('margin-left:auto')} onClick={vm.openAdd}><i className="ph ph-user-plus"></i>Add teammate</button>
         </div>
-        <div style={sx('background:var(--color-surface);border:1px solid var(--color-divider);border-radius:10px;overflow-x:auto')}>
+
+        <div className="ew-desktop-table" style={sx('background:var(--color-surface);border:1px solid var(--color-divider);border-radius:10px;overflow-x:auto')}>
           <table className="table">
             <thead>
               <tr><th style={sx('padding-left:16px')}>Name</th><th>Role</th><th>Store</th><th>Access</th><th>Joined</th><th style={sx('padding-right:16px')}></th></tr>
@@ -49,6 +50,31 @@ export default function Team({ vm }) {
             </tbody>
           </table>
         </div>
+
+        <div className="ew-mobile-cards" style={sx('flex-direction:column;gap:10px')}>
+          {vm.teamRows.map((p, i) => (
+            <div key={i} style={sx('background:var(--color-surface);border:1px solid var(--color-divider);border-radius:10px;padding:14px')}>
+              <div style={sx('display:flex;align-items:center;gap:10px')}>
+                <div style={sx('width:32px;height:32px;flex:none;border-radius:50%;background:var(--color-accent-800);color:var(--color-accent-200);display:grid;place-items:center;font-size:11px;font-weight:600')}>{p.initials}</div>
+                <div style={sx('flex:1;min-width:0')}>
+                  <div style={sx('font-size:13.5px')}>{p.name}</div>
+                  <div style={sx('font-size:11px;color:var(--color-neutral-500)')}>{p.email}</div>
+                </div>
+                {p.removable && (
+                  <button className="btn btn-ghost btn-icon" onClick={p.remove} title="Remove from store" style={sx('flex:none')}>
+                    <i className="ph ph-trash" style={sx('font-size:15px')}></i>
+                  </button>
+                )}
+              </div>
+              <div style={sx('display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--color-divider)')}>
+                <span className={'tag ' + p.roleClass}>{p.role}</span>
+                <span style={sx('font-size:12px;color:var(--color-neutral-400)')}>{p.store}</span>
+                <span style={sx('font-size:11px;color:var(--color-neutral-600);margin-left:auto')}>{p.access} · {p.joined}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
         <div style={sx('font-size:12px;color:var(--color-neutral-600);margin-top:12px')}>Only owners and store managers can add or remove people. Pricing controls follow the role.</div>
       </div>
       {vm.addOpen && (
