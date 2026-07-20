@@ -20,7 +20,7 @@ export default function Home({ vm }) {
           <a href="#pricing" style={sx('font-size:13px;text-decoration:none;color:#41503E')}>Pricing</a>
           <a href="mailto:sales@equipworth.com" style={sx('font-size:13px;text-decoration:none;color:#41503E')}>Contact</a>
           <button className="btn" onClick={vm.goLogin} style={sx('background:#2F6B28;border:none;color:#F3F7F0;font-weight:600;padding:9px 16px')}>
-            Sign in<i className="ph ph-arrow-right"></i>
+            {vm.authed ? 'Dashboard' : 'Sign in'}<i className="ph ph-arrow-right"></i>
           </button>
         </nav>
       </header>
@@ -39,7 +39,7 @@ export default function Home({ vm }) {
           </p>
           <div style={sx('display:flex;gap:10px;flex-wrap:wrap')}>
             <button className="btn" onClick={vm.goLogin} style={sx('background:#2F6B28;border:none;color:#F3F7F0;font-weight:600;padding:11px 20px;font-size:14px')}>
-              <i className="ph ph-terminal-window"></i>Sign in to the terminal
+              <i className={'ph ' + (vm.authed ? 'ph-squares-four' : 'ph-terminal-window')}></i>{vm.authed ? 'Go to your dashboard' : 'Sign in to the terminal'}
             </button>
             <button className="btn" onClick={vm.goDash} style={sx('border:1px solid var(--color-divider);color:var(--color-text);padding:11px 20px;font-size:14px')}>
               <i className="ph ph-play"></i>Try the live demo
@@ -203,7 +203,7 @@ export default function Home({ vm }) {
             <p style={sx('color:rgba(237,235,226,.65);margin:0;font-size:14px')}>Your lot, the market, and Deere's programs. One screen.</p>
           </div>
           <button className="btn" onClick={vm.goLogin} style={sx('flex:none;background:#A9CCE2;border:none;color:#132C42;font-weight:600;padding:11px 20px')}>
-            Sign in to the terminal<i className="ph ph-arrow-right"></i>
+            {vm.authed ? 'Go to your dashboard' : 'Sign in to the terminal'}<i className="ph ph-arrow-right"></i>
           </button>
         </div>
       </section>
@@ -221,7 +221,7 @@ export default function Home({ vm }) {
             <span style={sx('font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-neutral-600)')}>Product</span>
             <a href="#product" style={sx('font-size:13px;text-decoration:none;color:var(--color-neutral-400)')}>Overview</a>
             <a href="#pricing" style={sx('font-size:13px;text-decoration:none;color:var(--color-neutral-400)')}>Pricing</a>
-            <a href="#" onClick={vm.goDashLink} style={sx('font-size:13px;text-decoration:none;color:var(--color-neutral-400)')}>Sign in</a>
+            <a href="#" onClick={vm.goDashLink} style={sx('font-size:13px;text-decoration:none;color:var(--color-neutral-400)')}>{vm.authed ? 'Dashboard' : 'Sign in'}</a>
           </div>
           <div style={sx('display:flex;flex-direction:column;gap:9px')}>
             <span style={sx('font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-neutral-600)')}>Company</span>

@@ -86,9 +86,12 @@ export default class App extends React.Component {
       'New Holland': { 'T8.410': 139000, 'T8.380': 128500 },
       'Fendt': { '936 Vario': 158000, '724 Vario': 172000 }
     };
+    const APP_VIEWS = ['home', 'dashboard', 'inventory', 'unit', 'appraiser', 'team', 'system', 'settings', 'chat'];
     const authed = typeof localStorage !== 'undefined' && localStorage.getItem('ewAuthed') === '1';
+    const storedView = typeof localStorage !== 'undefined' ? localStorage.getItem('ewView') : null;
+    const initialView = authed && storedView && APP_VIEWS.includes(storedView) ? storedView : (this.props.startOn ?? 'home');
     this.state = {
-      view: authed ? 'dashboard' : (this.props.startOn ?? 'home'), unitId: null, slider: {}, query: '', cat: 'All',
+      view: initialView, authed, unitId: null, slider: {}, query: '', cat: 'All',
       apprMake: 'John Deere', apprModel: '8R 340', apprHours: 1500, apprCond: 'Good',
       teamFilter: 'All', addOpen: false, nName: '', nRole: 'Sales', nStore: 'Kirksville',
       watch: { 'EW-2398': true, 'EW-2405': true }, deal: {},
@@ -194,17 +197,23 @@ export default class App extends React.Component {
     this._raf = requestAnimationFrame(step);
   }
 
-  nav(view) { this.setState({ view, userMenu: false }); if (view === 'dashboard') this.startCount(); }
-  openUnit(stock) { this.setState({ view: 'unit', unitId: stock }); }
+  saveView(view) {
+    try { if (typeof localStorage !== 'undefined') localStorage.setItem('ewView', view); } catch (e) {}
+  }
+
+  nav(view) { this.setState({ view, userMenu: false }); if (view === 'dashboard') this.startCount(); this.saveView(view); }
+  openUnit(stock) { this.setState({ view: 'unit', unitId: stock }); this.saveView('unit'); }
 
   signIn() {
     try { localStorage.setItem('ewAuthed', '1'); } catch (e) {}
+    this.setState({ authed: true });
     this.nav('dashboard');
   }
 
   signOut() {
     try { localStorage.removeItem('ewAuthed'); } catch (e) {}
-    this.setState({ view: 'signedout', userMenu: false });
+    this.setState({ authed: false, view: 'signedout', userMenu: false });
+    this.saveView('signedout');
     this.toast('Signed out');
   }
 
@@ -736,8 +745,9 @@ export default class App extends React.Component {
         pick: () => this.setState({ revHold: { idx: i2, until: Date.now() + 9000, tick: (revHold ? revHold.tick : revBucket) + 1 } }),
         style: 'width:7px;height:7px;border-radius:50%;border:none;cursor:pointer;padding:0;background:' + (i2 === revShow ? '#2F6B28' : 'rgba(26,31,27,.22)')
       })),
-      goDashLink: ev => { ev.preventDefault(); this.nav('signedout'); },
-      goLogin: () => this.nav('signedout'),
+      authed: s.authed,
+      goDashLink: ev => { ev.preventDefault(); this.nav(s.authed ? 'dashboard' : 'signedout'); },
+      goLogin: () => this.nav(s.authed ? 'dashboard' : 'signedout'),
       goHomeLink: ev => {
         ev.preventDefault();
         this.nav('home');
