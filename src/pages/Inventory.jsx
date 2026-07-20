@@ -13,7 +13,7 @@ export default function Inventory({ vm }) {
             </label>
           ))}
         </div>
-        <div style={sx('position:relative;margin-left:auto;width:250px;max-width:100%')}>
+        <div className="ew-search-box" style={sx('position:relative;margin-left:auto;width:250px;max-width:100%')}>
           <i className="ph ph-magnifying-glass" style={sx('position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--color-neutral-500)')}></i>
           <input className="input" style={sx('padding-left:32px;background:color-mix(in srgb, var(--color-text) 5%, transparent)')} placeholder="Stock #, make, model…" value={vm.query} onChange={vm.onQuery} />
         </div>

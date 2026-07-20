@@ -89,6 +89,14 @@
   .ew-home-navlink {
     display: none !important;
   }
+
+  /* Inventory search box: margin-left:auto pins it to one side on its own
+     wrapped line, reading as off-center/chopped. Full-width and centered
+     by the row's own padding instead. */
+  .ew-search-box {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
 }
 
 @media (max-width: 560px) {
