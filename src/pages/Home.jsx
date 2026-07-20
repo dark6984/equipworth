@@ -41,9 +41,11 @@ export default function Home({ vm }) {
             <button className="btn" onClick={vm.goLogin} style={sx('background:#2F6B28;border:none;color:#F3F7F0;font-weight:600;padding:11px 20px;font-size:14px')}>
               <i className={'ph ' + (vm.authed ? 'ph-squares-four' : 'ph-terminal-window')}></i>{vm.authed ? 'Go to your dashboard' : 'Sign in to the terminal'}
             </button>
-            <button className="btn" onClick={vm.goDash} style={sx('border:1px solid var(--color-divider);color:var(--color-text);padding:11px 20px;font-size:14px')}>
-              <i className={'ph ' + (vm.authed ? 'ph-squares-four' : 'ph-play')}></i>{vm.authed ? 'Go to your dashboard' : 'Try the live demo'}
-            </button>
+            {!vm.authed && (
+              <button className="btn" onClick={vm.goDash} style={sx('border:1px solid var(--color-divider);color:var(--color-text);padding:11px 20px;font-size:14px')}>
+                <i className="ph ph-play"></i>Try the live demo
+              </button>
+            )}
           </div>
           <div style={sx('display:flex;gap:8px;flex-wrap:wrap;margin-top:30px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600)')}>
             <span>TractorHouse</span><span style={sx('color:var(--color-neutral-800)')}>/</span>
