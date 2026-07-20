@@ -96,6 +96,25 @@
   .ew-search-box {
     width: 100% !important;
     margin-left: 0 !important;
+    order: 2;
+  }
+
+  /* Inventory toolbar: Import/Export move up next to the "The lot" title
+     (top-right corner of that row) instead of sitting on their own row
+     below the category filters and search box. */
+  .ew-tb-import,
+  .ew-tb-export {
+    order: 1;
+    padding: 8px !important;
+  }
+  .ew-tb-import {
+    margin-left: auto !important;
+  }
+  .ew-tb-btn-label {
+    display: none;
+  }
+  .ew-tb-cats {
+    order: 2;
   }
 }
 

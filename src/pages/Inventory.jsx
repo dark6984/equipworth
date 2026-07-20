@@ -6,7 +6,7 @@ export default function Inventory({ vm }) {
       <div style={sx('display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-bottom:16px')}>
         <h2 style={sx('font-size:22px;letter-spacing:-0.02em;margin:0')}>The lot</h2>
         <span style={sx('font-size:12px;color:var(--color-neutral-500);font-variant-numeric:tabular-nums')}>{vm.rowCount} units</span>
-        <div style={sx('display:flex;gap:2px;flex-wrap:wrap;margin-left:6px')}>
+        <div className="ew-tb-cats" style={sx('display:flex;gap:2px;flex-wrap:wrap;margin-left:6px')}>
           {vm.catOpts.map((c, i) => (
             <label key={i} className="seg-opt" style={sx('border:none;border-radius:999px;padding:6px 13px;font-size:12.5px')}>
               <input type="radio" name="cat" checked={c.on} onChange={c.pick} readOnly />{c.label}
@@ -17,8 +17,8 @@ export default function Inventory({ vm }) {
           <i className="ph ph-magnifying-glass" style={sx('position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--color-neutral-500)')}></i>
           <input className="input" style={sx('padding-left:32px;background:color-mix(in srgb, var(--color-text) 5%, transparent)')} placeholder="Stock #, make, model…" value={vm.query} onChange={vm.onQuery} />
         </div>
-        <button className="btn btn-secondary" onClick={vm.importClick}><i className="ph ph-upload-simple"></i>Import</button>
-        <button className="btn btn-secondary" onClick={vm.exportCsv}><i className="ph ph-download-simple"></i>Export</button>
+        <button className="btn btn-secondary ew-tb-import" onClick={vm.importClick}><i className="ph ph-upload-simple"></i><span className="ew-tb-btn-label">Import</span></button>
+        <button className="btn btn-secondary ew-tb-export" onClick={vm.exportCsv}><i className="ph ph-download-simple"></i><span className="ew-tb-btn-label">Export</span></button>
         <input type="file" accept=".csv,text/csv" style={{ display: 'none' }} ref={vm.fileRef} onChange={vm.onImportFile} />
       </div>
 
