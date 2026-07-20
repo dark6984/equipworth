@@ -14,7 +14,7 @@ export default function Dashboard({ vm }) {
           <button className="btn btn-primary" onClick={vm.goInv}><i className="ph ph-rows"></i>Work the lot</button>
         </div>
       </div>
-      <div style={sx('display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:20px;padding:18px 0 26px;border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider)')}>
+      <div className="ew-stat-grid" style={sx('display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:20px;padding:18px 0 26px;border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider)')}>
         {vm.kpis.map((k, i) => (
           <div key={i} style={sx(k.cardStyle)}>
             <div style={sx('font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-neutral-500);margin-bottom:5px')}>{k.label}</div>

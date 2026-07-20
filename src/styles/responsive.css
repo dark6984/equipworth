@@ -79,3 +79,13 @@
     grid-template-columns: 1fr !important;
   }
 }
+
+@media (max-width: 480px) {
+  /* Dashboard KPIs / system stats: auto-fit degrades to one stretched
+     column at this width (each stat block is small, so a full-width card
+     leaves a big empty gap next to the number). Force a tidy 2-up grid
+     instead so cards actually match their content. */
+  .ew-stat-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
