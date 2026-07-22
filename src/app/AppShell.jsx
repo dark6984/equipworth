@@ -14,7 +14,7 @@ export default function AppShell({ vm }) {
     <div className="ew-shell" style={sx('display:flex;height:100%')}>
       <aside className="ew-sidebar" style={sx('width:218px;flex:none;display:flex;flex-direction:column;padding:16px 12px 14px;position:relative;background:linear-gradient(180deg,#121813,#0C100D);box-shadow:inset -1px 0 0 rgba(237,235,226,.09)')}>
         <button className="ew-sidebar-brand" onClick={vm.goHome} style={sx('display:flex;align-items:center;gap:9px;background:none;border:none;cursor:pointer;font:inherit;padding:0 8px 18px;text-align:left')}>
-          <Logo size={26} />
+          <Logo size={28} className="ew-brand-logo" />
           <span className="ew-navlabel" style={sx('font-family:var(--font-heading);font-weight:600;font-size:17px;letter-spacing:-0.01em;color:#EDEBE2')}>EquipWorth</span>
         </button>
         <nav className="ew-sidebar-nav" style={sx('display:flex;flex-direction:column;gap:2px')}>
