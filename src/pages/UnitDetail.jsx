@@ -15,7 +15,7 @@ export default function UnitDetail({ vm }) {
       </div>
       <div style={sx('background:var(--color-surface);border:1px solid var(--color-divider);border-radius:12px;padding:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:26px;align-items:center')}>
         <div style={sx('min-width:0')}>
-          <div style={sx('height:212px;border-radius:10px;overflow:hidden;border:1px solid var(--color-divider)')}>
+          <div style={sx('height:clamp(300px,38vw,460px);border-radius:10px;overflow:hidden;border:1px solid var(--color-divider)')}>
             <ImageSlot placeholder="Drop photos of this unit" />
           </div>
           <div style={sx('display:flex;justify-content:space-between;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600);margin-top:7px')}>
