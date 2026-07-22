@@ -13,53 +13,53 @@ export default function UnitDetail({ vm }) {
         <span className={'tag ' + u.tagClass}>{u.signal}</span>
         <span style={sx('font-size:12px;color:var(--color-neutral-500)')}>{u.stock} · {u.hours} hrs · {u.days} days on lot · acquired {u.acq}</span>
       </div>
-      <div style={sx('background:var(--color-surface);border:1px solid var(--color-divider);border-radius:12px;padding:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:26px;align-items:center')}>
-        <div style={sx('min-width:0')}>
-          <div style={sx('height:clamp(300px,38vw,460px);border-radius:10px;overflow:hidden;border:1px solid var(--color-divider)')}>
-            <ImageSlot placeholder="Drop photos of this unit" />
-          </div>
-          <div style={sx('display:flex;justify-content:space-between;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600);margin-top:7px')}>
-            <span>{u.stock} · lot photo</span><span>{u.hours} hrs</span>
-          </div>
+      <div style={sx('background:var(--color-surface);border:1px solid var(--color-divider);border-radius:12px;padding:22px')}>
+        <div style={sx('height:clamp(300px,38vw,460px);border-radius:10px;overflow:hidden;border:1px solid var(--color-divider)')}>
+          <ImageSlot placeholder="Drop photos of this unit" />
         </div>
-        <div>
-          <div style={sx('font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-500);margin-bottom:6px')}>Suggested list price</div>
-          <div style={sx('font-size:clamp(38px,4vw,50px);line-height:1;font-variant-numeric:tabular-nums;color:var(--color-accent-200)')}>{vm.sugPrice}</div>
-          <div style={sx('font-size:12.5px;color:var(--color-neutral-500);margin:8px 0 14px')}>{vm.sugNote}</div>
-          <button className="btn btn-primary" onClick={vm.applyPrice}><i className="ph ph-check"></i>Apply as list price</button>
+        <div style={sx('display:flex;justify-content:space-between;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600);margin-top:7px;margin-bottom:24px')}>
+          <span>{u.stock} · lot photo</span><span>{u.hours} hrs</span>
         </div>
-        <div>
-          <div style={sx('display:flex;justify-content:space-between;font-size:11px;margin-bottom:8px')}>
-            <span style={sx('display:flex;flex-direction:column')}>
-              <span style={sx('letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600)')}>Move it</span>
-              <span style={sx('color:var(--color-accent-2-300);font-size:13px;font-variant-numeric:tabular-nums')}>{u.quick}</span>
-            </span>
-            <span style={sx('display:flex;flex-direction:column;text-align:right')}>
-              <span style={sx('letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600)')}>Max profit</span>
-              <span style={sx('color:var(--color-accent-300);font-size:13px;font-variant-numeric:tabular-nums')}>{u.max}</span>
-            </span>
+        <div style={sx('display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:26px;align-items:center')}>
+          <div>
+            <div style={sx('font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-500);margin-bottom:6px')}>Suggested list price</div>
+            <div style={sx('font-size:clamp(38px,4vw,50px);line-height:1;font-variant-numeric:tabular-nums;color:var(--color-accent-200)')}>{vm.sugPrice}</div>
+            <div style={sx('font-size:12.5px;color:var(--color-neutral-500);margin:8px 0 14px')}>{vm.sugNote}</div>
+            <button className="btn btn-primary" onClick={vm.applyPrice}><i className="ph ph-check"></i>Apply as list price</button>
           </div>
-          <input type="range" className="ew-range" min="0" max="100" value={vm.sliderVal} onChange={vm.onSlider} />
-          <div style={sx('display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;margin-top:16px')}>
-            <div><div style={sx('font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600)')}>Est. days</div><div style={sx('font-size:16px;font-variant-numeric:tabular-nums')}>{vm.estDays}</div></div>
-            <div><div style={sx('font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600)')}>Margin</div><div style={sx('font-size:16px;font-variant-numeric:tabular-nums')}>{vm.margin}</div></div>
-            <div><div style={sx('font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600)')}>Vs comp</div><div style={sx('font-size:16px;font-variant-numeric:tabular-nums')}>{vm.vsComp}</div></div>
+          <div>
+            <div style={sx('display:flex;justify-content:space-between;font-size:11px;margin-bottom:8px')}>
+              <span style={sx('display:flex;flex-direction:column')}>
+                <span style={sx('letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600)')}>Move it</span>
+                <span style={sx('color:var(--color-accent-2-300);font-size:13px;font-variant-numeric:tabular-nums')}>{u.quick}</span>
+              </span>
+              <span style={sx('display:flex;flex-direction:column;text-align:right')}>
+                <span style={sx('letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600)')}>Max profit</span>
+                <span style={sx('color:var(--color-accent-300);font-size:13px;font-variant-numeric:tabular-nums')}>{u.max}</span>
+              </span>
+            </div>
+            <input type="range" className="ew-range" min="0" max="100" value={vm.sliderVal} onChange={vm.onSlider} />
+            <div style={sx('display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;margin-top:16px')}>
+              <div><div style={sx('font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600)')}>Est. days</div><div style={sx('font-size:16px;font-variant-numeric:tabular-nums')}>{vm.estDays}</div></div>
+              <div><div style={sx('font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600)')}>Margin</div><div style={sx('font-size:16px;font-variant-numeric:tabular-nums')}>{vm.margin}</div></div>
+              <div><div style={sx('font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-600)')}>Vs comp</div><div style={sx('font-size:16px;font-variant-numeric:tabular-nums')}>{vm.vsComp}</div></div>
+            </div>
           </div>
-        </div>
-        <div style={sx('min-width:0')}>
-          <div style={sx('display:flex;justify-content:space-between;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:4px')}>
-            <span>Price position</span><span style={sx('font-variant-numeric:tabular-nums;color:var(--color-neutral-400)')}>ask {u.ask}</span>
-          </div>
-          <div style={sx('position:relative;height:64px;margin:10px 24px 0')}>
-            <div style={sx('position:absolute;left:0;right:0;top:26px;height:3px;border-radius:2px;background:color-mix(in srgb, var(--color-text) 8%, transparent)')}></div>
-            <div style={sx(u.bandStyle)}></div>
-            {u.markers.map((m, i) => (
-              <div key={i} style={sx(m.style)}>
-                <span style={sx('font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-600);white-space:nowrap')}>{m.label}</span>
-                <span style={{ width: 2, height: 11, background: m.color, borderRadius: 1 }}></span>
-                <span style={{ fontSize: 11, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap', color: m.color }}>{m.value}</span>
-              </div>
-            ))}
+          <div style={sx('min-width:0')}>
+            <div style={sx('display:flex;justify-content:space-between;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:4px')}>
+              <span>Price position</span><span style={sx('font-variant-numeric:tabular-nums;color:var(--color-neutral-400)')}>ask {u.ask}</span>
+            </div>
+            <div style={sx('position:relative;height:64px;margin:10px 24px 0')}>
+              <div style={sx('position:absolute;left:0;right:0;top:26px;height:3px;border-radius:2px;background:color-mix(in srgb, var(--color-text) 8%, transparent)')}></div>
+              <div style={sx(u.bandStyle)}></div>
+              {u.markers.map((m, i) => (
+                <div key={i} style={sx(m.style)}>
+                  <span style={sx('font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-600);white-space:nowrap')}>{m.label}</span>
+                  <span style={{ width: 2, height: 11, background: m.color, borderRadius: 1 }}></span>
+                  <span style={{ fontSize: 11, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap', color: m.color }}>{m.value}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
