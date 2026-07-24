@@ -8,6 +8,13 @@ import Team from '../pages/Team.jsx';
 import System from '../pages/System.jsx';
 import Settings from '../pages/Settings.jsx';
 import Chat from '../pages/Chat.jsx';
+import Invites from '../pages/Invites.jsx';
+
+function initials(user) {
+  if (!user || !user.name) return '';
+  const parts = user.name.trim().split(/\s+/);
+  return ((parts[0]?.[0] || '') + (parts[1]?.[0] || '')).toUpperCase();
+}
 
 export default function AppShell({ vm }) {
   return (
@@ -42,8 +49,8 @@ export default function AppShell({ vm }) {
           {vm.userMenu && (
             <div className="ew-usermenu" style={sx('position:absolute;bottom:62px;left:12px;right:12px;background:var(--color-surface);border:1px solid var(--color-divider);border-radius:10px;box-shadow:var(--shadow-lg);padding:6px;display:flex;flex-direction:column;gap:2px;z-index:40;animation:ewfade .18s ease both')}>
               <div style={sx('padding:8px 10px;border-bottom:1px solid var(--color-divider);margin-bottom:4px')}>
-                <div style={sx('font-size:13px')}>Drew Barnett</div>
-                <div style={sx('font-size:11px;color:var(--color-neutral-500)')}>Used Eq. Manager · {vm.dealerName}</div>
+                <div style={sx('font-size:13px')}>{vm.user ? vm.user.name : ''}</div>
+                <div style={sx('font-size:11px;color:var(--color-neutral-500)')}>{vm.user ? vm.user.email : ''}</div>
               </div>
               <button onClick={vm.goSettings} style={sx('display:flex;align-items:center;gap:9px;font:inherit;font-size:13px;color:var(--color-text);background:transparent;border:none;border-radius:6px;padding:8px 10px;cursor:pointer;text-align:left')}>
                 <i className="ph ph-gear-six" style={sx('font-size:15px')}></i>Settings
@@ -54,10 +61,10 @@ export default function AppShell({ vm }) {
             </div>
           )}
           <button className="ew-user-btn" onClick={vm.toggleUserMenu} style={sx('display:flex;align-items:center;gap:8px;background:rgba(237,235,226,.07);border:1px solid rgba(237,235,226,.12);border-radius:10px;cursor:pointer;font:inherit;padding:7px 10px;width:100%;text-align:left')}>
-            <span style={sx('width:26px;height:26px;flex:none;border-radius:50%;background:rgba(237,235,226,.14);color:#EDEBE2;display:grid;place-items:center;font-size:10px;font-weight:600')}>DB</span>
+            <span style={sx('width:26px;height:26px;flex:none;border-radius:50%;background:rgba(237,235,226,.14);color:#EDEBE2;display:grid;place-items:center;font-size:10px;font-weight:600')}>{initials(vm.user)}</span>
             <span className="ew-navlabel" style={sx('min-width:0;flex:1')}>
-              <span style={sx('display:block;font-size:12px;line-height:1.2;color:#EDEBE2')}>Drew Barnett</span>
-              <span style={sx('display:block;font-size:10px;color:rgba(237,235,226,.55)')}>Used Eq. Manager</span>
+              <span style={sx('display:block;font-size:12px;line-height:1.2;color:#EDEBE2')}>{vm.user ? vm.user.name : ''}</span>
+              <span style={sx('display:block;font-size:10px;color:rgba(237,235,226,.55)')}>{vm.dealerName}</span>
             </span>
             <i className="ph ph-caret-up-down ew-navlabel" style={sx('font-size:13px;color:rgba(237,235,226,.5)')}></i>
           </button>
@@ -81,6 +88,7 @@ export default function AppShell({ vm }) {
           {vm.isSys && <System vm={vm} />}
           {vm.isSet && <Settings vm={vm} />}
           {vm.isChat && <Chat vm={vm} />}
+          {vm.isInvites && <Invites />}
         </main>
       </div>
     </div>

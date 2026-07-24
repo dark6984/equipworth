@@ -86,12 +86,12 @@ export default class App extends React.Component {
       'New Holland': { 'T8.410': 139000, 'T8.380': 128500 },
       'Fendt': { '936 Vario': 158000, '724 Vario': 172000 }
     };
-    const APP_VIEWS = ['home', 'dashboard', 'inventory', 'unit', 'appraiser', 'team', 'system', 'settings', 'chat'];
-    const authed = typeof localStorage !== 'undefined' && localStorage.getItem('ewAuthed') === '1';
-    const storedView = typeof localStorage !== 'undefined' ? localStorage.getItem('ewView') : null;
-    const initialView = authed && storedView && APP_VIEWS.includes(storedView) ? storedView : (this.props.startOn ?? 'home');
+    this.APP_VIEWS = ['home', 'dashboard', 'inventory', 'unit', 'appraiser', 'team', 'system', 'settings', 'chat', 'invites'];
+    this._storedView = typeof localStorage !== 'undefined' ? localStorage.getItem('ewView') : null;
     this.state = {
-      view: initialView, authed, unitId: null, slider: {}, query: '', cat: 'All',
+      view: this.props.startOn ?? 'home', authed: false, user: null, booting: true,
+      loginEmail: '', loginPassword: '', loginError: '', loginBusy: false,
+      unitId: null, slider: {}, query: '', cat: 'All',
       apprMake: 'John Deere', apprModel: '8R 340', apprHours: 1500, apprCond: 'Good',
       teamFilter: 'All', addOpen: false, nName: '', nRole: 'Sales', nStore: 'Kirksville',
       watch: { 'EW-2398': true, 'EW-2405': true }, deal: {},
@@ -204,17 +204,45 @@ export default class App extends React.Component {
   nav(view) { this.setState({ view, userMenu: false }); if (view === 'dashboard') this.startCount(); this.saveView(view); }
   openUnit(stock) { this.setState({ view: 'unit', unitId: stock }); this.saveView('unit'); }
 
-  signIn() {
-    try { localStorage.setItem('ewAuthed', '1'); } catch (e) {}
-    this.setState({ authed: true });
-    this.nav('dashboard');
+  async checkSession() {
+    try {
+      const res = await fetch('/api/auth/me');
+      if (res.ok) {
+        const { user } = await res.json();
+        const storedView = this._storedView;
+        const view = storedView && this.APP_VIEWS.includes(storedView) ? storedView : 'dashboard';
+        this.setState({ user, authed: true, booting: false, view });
+        if (view === 'dashboard') this.startCount();
+        return;
+      }
+    } catch (e) {}
+    this.setState({ user: null, authed: false, booting: false });
   }
 
-  signOut() {
-    try { localStorage.removeItem('ewAuthed'); } catch (e) {}
-    this.setState({ authed: false, view: 'signedout', userMenu: false });
+  async submitLogin() {
+    const email = this.state.loginEmail.trim();
+    const password = this.state.loginPassword;
+    if (!email || !password) { this.setState({ loginError: 'Enter your email and password' }); return; }
+    this.setState({ loginBusy: true, loginError: '' });
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) { this.setState({ loginBusy: false, loginError: data.error || 'Invalid email or password' }); return; }
+      this.setState({ authed: true, user: data.user, loginBusy: false, loginPassword: '', loginError: '' });
+      this.nav('dashboard');
+    } catch (e) {
+      this.setState({ loginBusy: false, loginError: 'Could not reach the server. Try again.' });
+    }
+  }
+
+  async signOut() {
+    this.setState({ authed: false, user: null, view: 'signedout', userMenu: false });
     this.saveView('signedout');
     this.toast('Signed out');
+    try { await fetch('/api/auth/logout', { method: 'POST' }); } catch (e) {}
   }
 
   themeTokens(m) {
@@ -270,7 +298,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this.applyTheme(this.state.theme);
-    if (this.state.view === 'dashboard') this.startCount();
+    this.checkSession();
     if (typeof window !== 'undefined') {
       if (window.__ewRevTimer) clearInterval(window.__ewRevTimer);
       window.__ewRevTimer = setInterval(() => {
@@ -379,7 +407,7 @@ export default class App extends React.Component {
     const dealerName = this.props.dealerName ?? 'Heartland Ag & Turf · 4 locations';
     const units = this.units;
     const tagClass = sig => sig === 'Hot' ? 'tag-accent' : sig === 'Reprice' ? 'tag-harvest' : sig === 'Watch' ? 'tag-accent-2' : 'tag-neutral';
-    const titles = { dashboard: 'Dashboard', inventory: 'Used inventory', unit: 'Unit pricing', appraiser: 'Trade appraiser', team: 'Team & stores', chat: 'Worth AI, market copilot', system: 'System status', settings: 'Settings' };
+    const titles = { dashboard: 'Dashboard', inventory: 'Used inventory', unit: 'Unit pricing', appraiser: 'Trade appraiser', team: 'Team & stores', chat: 'Worth AI, market copilot', system: 'System status', settings: 'Settings', invites: 'Invite teammates' };
     const navDefs = [
       ['dashboard', 'ph-squares-four', 'Dashboard'],
       ['inventory', 'ph-tractor', 'Inventory'],
@@ -388,7 +416,8 @@ export default class App extends React.Component {
       ['chat', 'ph-sparkle', 'Worth AI']];
     const adminDefs = [
       ['team', 'ph-users-three', 'Team'],
-      ['system', 'ph-activity', 'System status']];
+      ['system', 'ph-activity', 'System status'],
+      ...(s.user && s.user.isAdmin ? [['invites', 'ph-envelope-simple', 'Invites']] : [])];
     const navMap = ([v, icon, label]) => ({
       icon, label,
       go: () => v === 'unit' ? this.openUnit(s.unitId || units[1].stock) : this.nav(v),
@@ -397,6 +426,7 @@ export default class App extends React.Component {
     });
     const navItems = navDefs.map(navMap);
     const adminItems = adminDefs.map(navMap);
+    const firstName = (s.user && s.user.name) ? s.user.name.split(' ')[0] : 'there';
     // home
     const features = [
       { icon: 'ph-gavel', title: 'Auction comp engine', body: 'Every sold lot from five marketplaces, matched to your units and normalized for hours, condition and options. New comps land before you pour coffee.' },
@@ -493,11 +523,11 @@ export default class App extends React.Component {
     const [greet, greetSub] = hr2 < 5
       ? ['Still up, night owl?', 'The overnight pass lands at 02:00, fresh comps by breakfast.']
       : hr2 < 12
-        ? ['Good morning, Drew.', 'Overnight pass is done, ' + queue.length + ' units want a look before the phones start.']
+        ? ['Good morning, ' + firstName + '.', 'Overnight pass is done, ' + queue.length + ' units want a look before the phones start.']
         : hr2 < 17
-          ? ['Good afternoon, Drew.', queue.length + ' units on the queue, and the S-series trade-assist clock is ticking.']
+          ? ['Good afternoon, ' + firstName + '.', queue.length + ' units on the queue, and the S-series trade-assist clock is ticking.']
           : hr2 < 22
-            ? ['Good evening, Drew.', 'Wrap the day: ' + queue.length + ' pricing calls left on the queue.']
+            ? ['Good evening, ' + firstName + '.', 'Wrap the day: ' + queue.length + ' pricing calls left on the queue.']
             : ['Still at it, night owl?', 'Anything you price now gets rechecked when the 02:00 pass lands.'];
     const greetDate = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
     const maxDays = Math.max(...units.map(u => u.days));
@@ -681,7 +711,7 @@ export default class App extends React.Component {
     const wrapBot = 'align-self:flex-start;max-width:82%;display:flex;flex-direction:column;gap:2px;background:var(--color-surface);border-radius:var(--radius-md);padding:12px 16px;animation:ewfade .3s ease both';
     const wrapMe = 'align-self:flex-end;max-width:70%;background:var(--color-accent-900);color:var(--color-accent-100);border-radius:var(--radius-md);padding:10px 14px;animation:ewfade .3s ease both';
     const chatFresh = !active;
-    const chatGreeting = (hr2 < 12 ? 'Morning' : hr2 < 17 ? 'Afternoon' : 'Evening') + ', Drew.';
+    const chatGreeting = (hr2 < 12 ? 'Morning' : hr2 < 17 ? 'Afternoon' : 'Evening') + ', ' + firstName + '.';
     const messages = (active ? active.messages : []).map(m => ({
       wrapStyle: m.who === 'bot' ? wrapBot : wrapMe,
       hasBadge: !!m.badge, badge: m.badge || '',
@@ -705,13 +735,16 @@ export default class App extends React.Component {
       navItems, adminItems, dealerName, agingThreshold,
       pageTitle: titles[s.view],
       isHome: s.view === 'home', isApp: s.view !== 'home' && s.view !== 'signedout', isOut: s.view === 'signedout',
-      isDash: s.view === 'dashboard', isInv: s.view === 'inventory', isUnit: s.view === 'unit', isAppr: s.view === 'appraiser', isTeam: s.view === 'team', isChat: s.view === 'chat', isSet: s.view === 'settings', isSys: s.view === 'system',
+      isDash: s.view === 'dashboard', isInv: s.view === 'inventory', isUnit: s.view === 'unit', isAppr: s.view === 'appraiser', isTeam: s.view === 'team', isChat: s.view === 'chat', isSet: s.view === 'settings', isSys: s.view === 'system', isInvites: s.view === 'invites',
       userMenu: s.userMenu,
       toggleUserMenu: () => this.setState(st => ({ userMenu: !st.userMenu })),
       goSettings: () => this.nav('settings'),
       signOut: () => this.signOut(),
-      signIn: () => this.signIn(),
-      onLoginKey: ev => { if (ev.key === 'Enter') this.signIn(); },
+      signIn: () => this.submitLogin(),
+      onLoginKey: ev => { if (ev.key === 'Enter') this.submitLogin(); },
+      loginEmail: s.loginEmail, loginPassword: s.loginPassword, loginError: s.loginError, loginBusy: s.loginBusy,
+      onLoginEmail: ev => this.setState({ loginEmail: ev.target.value }),
+      onLoginPassword: ev => this.setState({ loginPassword: ev.target.value }),
       advTag, advTagClass, advHeadline, advBody, advTop,
       cpw: s.cpw, npw: s.npw, npw2: s.npw2,
       onCpw: ev => this.setState({ cpw: ev.target.value }),
@@ -745,7 +778,7 @@ export default class App extends React.Component {
         pick: () => this.setState({ revHold: { idx: i2, until: Date.now() + 9000, tick: (revHold ? revHold.tick : revBucket) + 1 } }),
         style: 'width:7px;height:7px;border-radius:50%;border:none;cursor:pointer;padding:0;background:' + (i2 === revShow ? '#2F6B28' : 'rgba(26,31,27,.22)')
       })),
-      authed: s.authed,
+      authed: s.authed, user: s.user, booting: s.booting,
       goDashLink: ev => { ev.preventDefault(); this.nav(s.authed ? 'dashboard' : 'signedout'); },
       goLogin: () => this.nav(s.authed ? 'dashboard' : 'signedout'),
       goHomeLink: ev => {
@@ -854,11 +887,21 @@ export default class App extends React.Component {
 
   render() {
     const vm = this.renderVals();
+    // While the session check is in flight, a returning visitor whose last
+    // view was inside the app gets a blank brand splash instead of a flash
+    // of the marketing home page that then jumps to their dashboard.
+    const showBootSplash = vm.booting && this._storedView && this._storedView !== 'home';
     return (
       <div style={{ height: '100vh', overflow: 'hidden', background: 'var(--color-bg)', color: 'var(--color-text)', fontFamily: 'var(--font-body)' }}>
-        {vm.isHome && <Home vm={vm} />}
-        {vm.isApp && <AppShell vm={vm} />}
-        {vm.isOut && <SignedOut vm={vm} />}
+        {showBootSplash ? (
+          <div style={{ height: '100%', display: 'grid', placeItems: 'center' }} />
+        ) : (
+          <>
+            {vm.isHome && <Home vm={vm} />}
+            {vm.isApp && <AppShell vm={vm} />}
+            {vm.isOut && <SignedOut vm={vm} />}
+          </>
+        )}
         {vm.legalOpen && <LegalModal title={vm.legalTitle} body={vm.legalBody} onClose={vm.closeLegal} />}
         {vm.toastOn && <Toast text={vm.toastText} />}
       </div>

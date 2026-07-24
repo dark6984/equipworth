@@ -7,8 +7,8 @@ export default function Settings({ vm }) {
       <div style={sx('background:var(--color-surface);border:1px solid var(--color-divider);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:14px')}>
         <span style={sx('font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-400)')}>Account</span>
         <div className="ew-grid-2col-sm" style={sx('display:grid;grid-template-columns:1fr 1fr;gap:12px')}>
-          <div className="field"><label>Name</label><input className="input" value="Drew Barnett" readOnly /></div>
-          <div className="field"><label>Email</label><input className="input" value="drew.barnett@legacyequip.com" readOnly /></div>
+          <div className="field"><label>Name</label><input className="input" value={vm.user ? vm.user.name : ''} readOnly /></div>
+          <div className="field"><label>Email</label><input className="input" value={vm.user ? vm.user.email : ''} readOnly /></div>
         </div>
         <div className="hr" style={{ margin: '4px 0' }}></div>
         <span style={sx('font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-400)')}>Change password</span>

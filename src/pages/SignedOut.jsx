@@ -9,12 +9,17 @@ export default function SignedOut({ vm }) {
           <Logo size={28} />
           <span style={sx('font-family:var(--font-heading);font-weight:600;font-size:19px;color:var(--color-text)')}>EquipWorth</span>
         </button>
-        <p style={sx('font-size:13px;color:var(--color-neutral-500);margin:0')}>Terminal access requires a dealership account. Sign in, or walk through the demo lot.</p>
-        <div className="field"><label>Email</label><input className="input" value="drew.barnett@legacyequip.com" readOnly /></div>
-        <div className="field"><label>Password</label><input className="input" type="password" placeholder="••••••••" onKeyDown={vm.onLoginKey} /></div>
-        <button className="btn btn-primary btn-block" onClick={vm.signIn}><i className="ph ph-sign-in"></i>Sign in</button>
+        <p style={sx('font-size:13px;color:var(--color-neutral-500);margin:0')}>EquipWorth is invite-only. Sign in with the account your dealership set up for you.</p>
+        {vm.loginError && (
+          <div style={sx('font-size:12px;color:var(--color-harvest-ink);background:var(--color-harvest-bg);border-radius:8px;padding:9px 11px')}>{vm.loginError}</div>
+        )}
+        <div className="field"><label>Email</label><input className="input" type="email" autoComplete="username" value={vm.loginEmail} onChange={vm.onLoginEmail} onKeyDown={vm.onLoginKey} /></div>
+        <div className="field"><label>Password</label><input className="input" type="password" autoComplete="current-password" placeholder="••••••••" value={vm.loginPassword} onChange={vm.onLoginPassword} onKeyDown={vm.onLoginKey} /></div>
+        <button className="btn btn-primary btn-block" onClick={vm.signIn} disabled={vm.loginBusy}>
+          <i className="ph ph-sign-in"></i>{vm.loginBusy ? 'Signing in…' : 'Sign in'}
+        </button>
         <button onClick={vm.goHome} className="btn btn-secondary btn-block" style={sx('margin-top:2px;font-size:13px')}><i className="ph ph-arrow-left"></i>Back to the site</button>
-        <div style={sx('font-size:11px;color:var(--color-neutral-600);text-align:center')}>Demo build: any password opens the sample dealership.</div>
+        <div style={sx('font-size:11px;color:var(--color-neutral-600);text-align:center')}>Don’t have an account? Ask your dealership admin for an invite.</div>
       </div>
     </div>
   );
